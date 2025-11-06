@@ -16,3 +16,4 @@ services:
 networks:
   root_default:
     name: root_default
+    external: true

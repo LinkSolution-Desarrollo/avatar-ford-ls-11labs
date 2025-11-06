@@ -715,7 +715,7 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
     return (
       <div className="flex flex-col gap-6 text-sky-100">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-3xl border border-white/12 bg-white/5 p-5 backdrop-blur">
+          <div className="order-2 rounded-3xl border border-white/12 bg-white/5 p-5 backdrop-blur lg:order-1">
             <div className="flex flex-col gap-4">
               <div
                 className={cn(
@@ -827,7 +827,7 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
               ) : null}
             </div>
           </div>
-          <div className="rounded-3xl border border-white/12 bg-[#0C1A3C]/80 p-5 backdrop-blur">
+          <div className="order-1 rounded-3xl border border-white/12 bg-[#0C1A3C]/80 p-5 backdrop-blur lg:order-2">
             <div className="flex flex-col gap-5">
               <Orb
                 agentState={agentState}

@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+    font-family: "Geist", -apple-system, "system-ui", sans-serif;
+}
+@layer base {
+    :root {
+        --background: 218 86% 5%;
+        --foreground: 197 100% 96%;
+        --card: 223 67% 14%;
+        --card-foreground: 197 100% 92%;
+        --popover: 223 67% 14%;
+        --popover-foreground: 197 100% 96%;
+        --primary: 218 100% 32%;
+        --primary-foreground: 197 100% 96%;
+        --secondary: 221 67% 12%;
+        --secondary-foreground: 197 72% 92%;
+        --muted: 221 67% 12%;
+        --muted-foreground: 207 22% 80%;
+        --accent: 206 100% 52%;
+        --accent-foreground: 222 47% 11%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 60 9.1% 97.8%;
+        --border: 220 20% 25%;
+        --input: 220 20% 25%;
+        --ring: 206 100% 52%;
+        --chart-1: 218 100% 32%;
+        --chart-2: 206 100% 52%;
+        --chart-3: 221 76% 24%;
+        --chart-4: 207 89% 68%;
+        --chart-5: 221 67% 15%;
+        --radius: 1rem;
+    }
+    .dark {
+        --background: 218 86% 5%;
+        --foreground: 197 100% 96%;
+        --card: 223 67% 14%;
+        --card-foreground: 197 100% 92%;
+        --popover: 223 67% 14%;
+        --popover-foreground: 197 100% 96%;
+        --primary: 218 100% 32%;
+        --primary-foreground: 197 100% 96%;
+        --secondary: 221 67% 12%;
+        --secondary-foreground: 197 72% 92%;
+        --muted: 221 67% 12%;
+        --muted-foreground: 207 22% 80%;
+        --accent: 206 100% 52%;
+        --accent-foreground: 222 47% 11%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 60 9.1% 97.8%;
+        --border: 220 20% 25%;
+        --input: 220 20% 25%;
+        --ring: 206 100% 52%;
+        --chart-1: 218 100% 32%;
+        --chart-2: 206 100% 52%;
+        --chart-3: 221 76% 24%;
+        --chart-4: 207 89% 68%;
+        --chart-5: 221 67% 15%;
+    }
+}
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply text-foreground;
+        background-color: hsl(var(--background));
+        background-image:
+        radial-gradient(circle at 12% 18%, rgba(10, 150, 255, 0.35), transparent 58%),
+        radial-gradient(circle at 78% -10%, rgba(0, 61, 165, 0.3), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(32, 91, 210, 0.18), transparent 45%),
+        linear-gradient(165deg, rgba(2, 11, 26, 0.98), rgba(9, 22, 56, 0.96) 55%, rgba(2, 11, 26, 0.99));
+        background-attachment: fixed;
+        color-scheme: dark;
+    }
+}
+/* Orb Styling */
+.orb {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+.animate-orb {
+    animation: wave 0.4s infinite ease-in-out;
+}
+.animate-orb-slow {
+    animation: wave 2s infinite ease-in-out;
+}
+.orb-active {
+    background: radial-gradient(circle at center, #64b5f6, #0f2d6c, #020b1a);
+}
+.orb-inactive {
+    background: radial-gradient(circle at center,
+            rgba(100, 181, 246, 0.35),
+            rgba(15, 45, 108, 0.28),
+            rgba(2, 11, 26, 0.4));
+}
+/* Inner Gradient Layer for Waving Effect */
+.orb::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+    animation: wave-motion 6s infinite linear;
+}
+/* Keyframes for Waving Animation */
+@keyframes wave {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+@keyframes wave-motion {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(10px, 10px) rotate(180deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}

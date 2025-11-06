@@ -1,21 +1,31 @@
+"use client";
+
 import { ConvAI } from "@/components/ConvAI";
+import { useEffect } from "react";
 
 const SIMPLE_STEPS = [
   {
     title: "1. Dejanos tu WhatsApp",
     description: "Escribí tu número con código de país para recibir la selfie animada.",
+    image: "/placeholder1.png",
   },
   {
     title: "2. Hablá con Linky",
     description: "Contale quién sos, preguntale algo sobre Ford y pedile la foto.",
+    image: "/placeholder1.png",
   },
   {
     title: "3. Sonreí para la selfie",
     description: "Cuando Linky te avise, mira a la cámara. La imagen llega por WhatsApp en minutos.",
+    image: "/placeholder1.png",
   },
 ];
 
 export default function Home() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
+
   return (
     <div className="relative flex min-h-screen w-full justify-center px-4 pb-20 pt-28 sm:px-10 md:pt-32">
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -29,20 +39,34 @@ export default function Home() {
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-200/80">
               Avatar Linky
             </span>
-            <h1 className="text-2xl font-semibold text-sky-50 sm:text-3xl">
-              Probá el voicebot y llevate tu selfie Ford animada
-            </h1>
+            <div className="flex flex-row items-center gap-4">
+              <p className="text-2xl font-semibold text-sky-50 sm:text-3xl">
+                Probá el voicebot y llevate tu selfie Ford animada:
+              </p>
+              <img src="/sticker-header.png" alt="Sticker" className="h-40 w-40 object-contain ml-4" />
+            </div>
+
           </div>
+          
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {SIMPLE_STEPS.map((step) => (
               <div
                 key={step.title}
-                className="rounded-2xl border border-white/10 bg-[#06122A]/60 p-4 text-sm text-sky-100/85 shadow-[0_12px_40px_rgba(3,17,40,0.35)]"
+                className="rounded-2xl border border-white/10 bg-[#06122A]/60 p-4 text-sm text-sky-100/85 shadow-[0_12px_40px_rgba(3,17,40,0.35)] flex flex-col items-center"
               >
                 <h2 className="text-base font-semibold text-sky-50">{step.title}</h2>
-                <p className="mt-2 leading-relaxed">{step.description}</p>
+                <p className="mt-2 leading-relaxed text-center">{step.description}</p>
+                <img src={step.image} alt={`${step.title} icon`} className="mt-4 h-24 w-24 object-contain" />
               </div>
             ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => window.scrollTo({ top: window.innerHeight * 1, behavior: 'smooth' })}
+              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-sky-100 transition hover:bg-white/20"
+            >
+              Comenzar experiencia
+            </button>
           </div>
         </section>
 

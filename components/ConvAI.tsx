@@ -242,7 +242,6 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
       });
       streamRef.current = stream;
       setCameraStatus("ready");
-      setCameraMessage("Cámara lista. ¡Sonríe!");
       setIsCameraVisible(true);
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -364,7 +363,6 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
     pendingCaptureRef.current = null;
     setCaptureStatus("countdown");
     setCaptureCountdown(3);
-    setCameraMessage("Camara lista. Preparate para la selfie.");
   }, []);
   const triggerAutoCapture = React.useCallback(
     async (source: "auto" | "manual", instructions?: string) => {
@@ -386,9 +384,9 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
       setCaptureStatus("warming");
       setCameraMessage(
         instructions ??
-          (source === "auto"
-            ? "El Voicebot Linky dice que es momento de la selfie. Preparando camara..."
-            : "Preparando la camara Ford. Posa como un piloto profesional.")
+        (source === "auto"
+          ? "El Voicebot Linky dice que es momento de la selfie. Preparando camara..."
+          : "Preparando la camara Ford. Posa como un piloto profesional.")
       );
       setIsCameraVisible(true);
       setActiveStep((prev) => Math.max(prev, 2));
@@ -647,18 +645,8 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
       }
     };
     window.addEventListener("keydown", handleKeyDown);
-  return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFlowModalOpen, closeModal]);
-  React.useEffect(() => {
-    if (!isFlowModalOpen) {
-      return;
-    }
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [isFlowModalOpen]);
   React.useEffect(() => {
     if (captureCountdown === null) {
       return;
@@ -714,15 +702,10 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
   if (isSimple) {
     return (
       <div className="flex flex-col gap-6 text-sky-100">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="order-2 rounded-3xl border border-white/12 bg-white/5 p-5 backdrop-blur lg:order-1">
+        <div className="flex justify-center">
+          {isCameraVisible ? (
             <div className="flex flex-col gap-4">
-              <div
-                className={cn(
-                  "relative w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 transition",
-                  isCameraVisible ? "opacity-100" : "opacity-70"
-                )}
-              >
+              <div className="relative w-full max-w-[320px] overflow-hidden rounded-3xl border border-white/10 bg-black/40">
                 <video
                   ref={videoRef}
                   playsInline
@@ -753,71 +736,12 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
                 ) : null}
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span
-                  className={cn(
-                    "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em]",
-                    captureStatus === "success"
-                      ? "border-emerald-400/60 bg-emerald-400/15 text-emerald-100"
-                      : captureStatus === "error"
-                        ? "border-rose-400/60 bg-rose-500/15 text-rose-100"
-                        : "border-white/15 bg-white/5 text-sky-100/80"
-                  )}
-                >
-                  {captureStatus === "uploading" || captureStatus === "warming" ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  ) : captureStatus === "success" ? (
-                    <Check className="h-3.5 w-3.5" />
-                  ) : captureStatus === "error" ? (
-                    <AlertCircle className="h-3.5 w-3.5" />
-                  ) : (
-                    <Camera className="h-3.5 w-3.5" />
-                  )}
-                  {captureStatusLabel}
-                </span>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setCaptureInfo({
-                      message: "Captura manual",
-                      instructions:
-                        "Selfie manual activada. Sonreí y quedate frente a la cámara.",
-                      reason: "Manual trigger",
-                      confidence: 1,
-                      triggeredAt: new Date().toISOString(),
-                      source: "manual",
-                    });
-                    captureInFlightRef.current = false;
-                    void triggerAutoCapture("manual");
-                  }}
-                  className="rounded-full border-white/25 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-100 hover:bg-white/20"
-                >
-                  Captura manual
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={handleCameraToggle}
-                  disabled={captureStatus === "uploading"}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-100 hover:bg-white/10"
-                >
-                  {cameraButtonLabel}
-                </Button>
               </div>
-              {captureInfo ? (
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-sky-100/85">
-                  <p>
-                    {captureInfo.instructions ||
-                      captureInfo.reason ||
-                      "Linky está preparando la cámara. Sonreí y mantené la vista al frente."}
-                  </p>
+              {captureError ? (
+                <div className="flex items-start gap-2 rounded-2xl border border-rose-400/30 bg-rose-500/15 px-3 py-2 text-xs text-rose-100">
+                  <AlertCircle className="mt-0.5 h-4 w-4" />
+                  <span>{captureError}</span>
                 </div>
-              ) : (
-                <p className="rounded-2xl border border-dashed border-white/10 bg-white/5 p-3 text-xs text-sky-100/70">
-                  Cuando Linky te avise, mirá a la cámara y mantené la sonrisa unos segundos.
-                  También podés usar el botón de captura manual.
-                </p>
-              )}
-              {cameraMessage ? (
-                <p className="text-xs text-sky-100/70">{cameraMessage}</p>
               ) : null}
               {captureError ? (
                 <div className="flex items-start gap-2 rounded-2xl border border-rose-400/30 bg-rose-500/15 px-3 py-2 text-xs text-rose-100">
@@ -826,76 +750,82 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
                 </div>
               ) : null}
             </div>
-          </div>
-          <div className="order-1 rounded-3xl border border-white/12 bg-[#0C1A3C]/80 p-5 backdrop-blur lg:order-2">
-            <div className="flex flex-col gap-5">
-              <Orb
-                agentState={agentState}
-                className="h-[220px] w-full max-w-[260px] self-center"
-                colors={["#8ED2FF", "#0F2D6C"]}
-              />
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-sky-100/80">
+          ) : (
+            <Orb
+              agentState={agentState}
+              className="h-[220px] w-full max-w-[260px]"
+              colors={["#8ED2FF", "#0F2D6C"]}
+            />
+          )}
+        </div>
+        <div className="flex flex-col gap-5 items-center">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-sky-100/80 w-full max-w-md">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
                 <p className="font-semibold uppercase tracking-[0.28em] text-sky-200">
                   Estado
                 </p>
                 <p className="mt-2 text-base text-sky-50">{statusLabel}</p>
-                <p className="mt-3 text-xs uppercase tracking-[0.26em] text-sky-200/80">
+              </div>
+              <div className="text-center">
+                <p className="font-semibold uppercase tracking-[0.28em] text-sky-200">
                   Cámara
                 </p>
-                <p className="mt-1 text-sm">{captureStatusLabel}</p>
-              </div>
-              {uploadSummary ? (
-                <div className="rounded-2xl border border-emerald-400/40 bg-emerald-400/15 p-3 text-sm text-emerald-100">
-                  {uploadSummary}
-                </div>
-              ) : captureInfo ? (
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-sky-100/80">
-                  {captureInfo.message}
-                </div>
-              ) : null}
-              <div className="space-y-2">
-                <label
-                  htmlFor="simple-phone"
-                  className="text-xs font-semibold uppercase tracking-[0.32em] text-sky-200"
-                >
-                  WhatsApp
-                </label>
-                <Input
-                  id="simple-phone"
-                  value={phoneNumber}
-                  onChange={handlePhoneChange}
-                  onBlur={() => setPhoneTouched(true)}
-                  placeholder="+54 9 11 1234 5678"
-                  className="h-12 rounded-2xl border-white/15 bg-[#0A1630]/60 text-base tracking-wide text-sky-50 placeholder:text-sky-100/40"
-                />
-                {phoneTouched && !isPhoneValid ? (
-                  <p className="text-xs text-rose-200/80">
-                    Ingresá tu WhatsApp con código internacional (ej: +54 9 11 1234 5678).
-                  </p>
-                ) : null}
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Button
-                  onClick={startConversation}
-                  disabled={!isPhoneValid || conversation.status !== "disconnected"}
-                  className="rounded-full bg-sky-500 px-4 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-sky-50 hover:bg-sky-400 disabled:opacity-50"
-                >
-                  {conversation.status === "connecting" ? "Conectando..." : "Iniciar charla"}
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={stopConversation}
-                  disabled={conversation.status === "disconnected"}
-                  className="rounded-full border-white/25 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100 hover:bg-white/15 disabled:opacity-50"
-                >
-                  Finalizar
-                </Button>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-sky-100/75">
-                Tip: Pedile a Linky que te cuente algo sobre Ford y después pedile que te saque la foto.
-                Apenas termine, la selfie llega directo a tu WhatsApp.
+                <p className="mt-2 text-base text-sky-50">{captureStatusLabel}</p>
               </div>
             </div>
+          </div>
+          {uploadSummary ? (
+            <div className="rounded-2xl border border-emerald-400/40 bg-emerald-400/15 p-3 text-sm text-emerald-100 max-w-md">
+              {uploadSummary}
+            </div>
+          ) : captureInfo ? (
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-sky-100/80 max-w-md">
+              {captureInfo.message}
+            </div>
+          ) : null}
+          <div className="space-y-2 w-full max-w-md">
+            <label
+              htmlFor="simple-phone"
+              className="text-xs font-semibold uppercase tracking-[0.32em] text-sky-200"
+            >
+              WhatsApp
+            </label>
+            <Input
+              id="simple-phone"
+              value={phoneNumber}
+              onChange={handlePhoneChange}
+              onFocus={() => { if (!phoneNumber) setPhoneNumber("+54 9"); }}
+              onBlur={() => setPhoneTouched(true)}
+              placeholder="+54 9 11 1234 5678"
+              className="h-12 rounded-2xl border-white/15 bg-[#0A1630]/60 text-base tracking-wide text-sky-50 placeholder:text-sky-100/40 w-full"
+            />
+            {phoneTouched && !isPhoneValid ? (
+              <p className="text-xs text-rose-200/80">
+                Ingresá tu WhatsApp con código internacional (ej: +54 9 11 1234 5678).
+              </p>
+            ) : null}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 max-w-md">
+            <Button
+              onClick={startConversation}
+              disabled={!isPhoneValid || conversation.status !== "disconnected"}
+              className="rounded-full bg-sky-500 px-4 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-sky-50 hover:bg-sky-400 disabled:opacity-50"
+            >
+              {conversation.status === "connecting" ? "Conectando..." : "Iniciar charla"}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={stopConversation}
+              disabled={conversation.status === "disconnected"}
+              className="rounded-full border-white/25 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100 hover:bg-white/15 disabled:opacity-50"
+            >
+              Finalizar
+            </Button>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-xs text-sky-100/75 max-w-md">
+            Tip: Pedile a Linky que te cuente algo sobre Ford y después pedile que te saque la foto.
+            Apenas termine, la selfie llega directo a tu WhatsApp.
           </div>
         </div>
         <canvas ref={canvasRef} className="hidden" />
@@ -1273,16 +1203,18 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
             <Sparkles className="h-3.5 w-3.5 text-sky-200" />
             LinkSolution AI
           </span>
-          <div className="space-y-3">
-            <h1 className="text-3xl font-semibold tracking-tight text-sky-50 sm:text-4xl md:text-5xl leading-tight max-w-2xl">
-              Habla con Linky el VoiceBot historiador de Ford con IA
-            </h1>
-            <p className="max-w-2xl text-base text-sky-100/80 leading-relaxed">
-            Ingresá tu número y hablá con nuestro voicebot de Ford. Podés preguntarle algún dato interesante de la marca o pedirle que te saque una foto.
-            
-            
-            ¡En pocos minutos, te enviaremos una versión animada de tu foto por WhatsApp!
-            </p>
+          <div className="flex items-center gap-6">
+            <div className="space-y-3 flex-1">
+              <h1 className="text-3xl font-semibold tracking-tight text-sky-50 sm:text-4xl md:text-5xl leading-tight max-w-2xl">
+                Habla con Linky el VoiceBot historiador de Ford con IA
+              </h1>
+              <p className="max-w-2xl text-base text-sky-100/80 leading-relaxed">
+                Ingresá tu número y hablá con nuestro voicebot de Ford. Podés preguntarle algún dato interesante de la marca o pedirle que te saque una foto.
+
+
+                ¡En pocos minutos, te enviaremos una versión animada de tu foto por WhatsApp!
+              </p>
+            </div>
           </div>
           <div className="grid w-full max-w-[520px] gap-3 sm:grid-cols-2">
             {VISIBLE_FEATURES.map((feature) => {

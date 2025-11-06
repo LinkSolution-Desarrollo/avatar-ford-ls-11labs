@@ -518,6 +518,11 @@ export function ConvAI({ variant = "default" }: ConvAIProps) {
       });
     } catch (error) {
       console.log(error);
+      alert(
+        error instanceof Error
+          ? `No se pudo iniciar la conversación: ${error.message}`
+          : "No se pudo iniciar la conversación. Intentá nuevamente."
+      );
     }
   }, [conversation, digitsOnly, isPhoneValid]);
   const stopConversation = React.useCallback(async () => {

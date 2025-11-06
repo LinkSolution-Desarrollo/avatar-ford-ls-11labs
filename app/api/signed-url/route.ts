@@ -11,8 +11,15 @@ export async function GET() {
   if (!agentId) {
     throw Error("AGENT_ID is not set");
   }
+  const apiKey = process.env.ELEVENLABS_API_KEY;
+  if (!apiKey) {
+    console.error("ELEVENLABS_API_KEY is not set");
+    return applyCors(
+      NextResponse.json({ error: "ElevenLabs API key missing" }, { status: 500 })
+    );
+  }
   try {
-    const client = new ElevenLabsClient();
+    const client = new ElevenLabsClient({ apiKey });
     const response = await client.conversationalAi.getSignedUrl({
       agent_id: agentId,
     });

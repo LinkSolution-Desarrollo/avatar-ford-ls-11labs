@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -267,7 +268,14 @@ export default function FotoPage() {
               <p className="text-2xl font-semibold text-sky-50 sm:text-3xl">
                  Filtros AI Linky.
               </p>
-              <img src="/sticker-header.png" alt="Sticker" className="h-28 w-28 object-contain" />
+              <Image
+                src="/sticker-header.png"
+                alt="Sticker"
+                width={112}
+                height={112}
+                className="h-28 w-28 object-contain"
+                priority
+              />
             </div>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -402,7 +410,14 @@ export default function FotoPage() {
             <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-gradient-to-br from-[#0F1F3E]/80 via-[#07132A]/90 to-[#020A19]/95 p-4 sm:p-6">
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40">
                 {snapshot ? (
-                  <img src={snapshot} alt="Previsualización de la selfie" className="h-full w-full object-cover" />
+                  <Image
+                    src={snapshot}
+                    alt="Previsualización de la selfie"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    unoptimized
+                  />
                 ) : (
                   <video
                     ref={videoRef}

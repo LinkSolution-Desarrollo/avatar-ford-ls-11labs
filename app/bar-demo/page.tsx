@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-type VisualizerMode = AgentState | "connecting" | "initializing" | "speaking";
+type VisualizerMode = Exclude<AgentState, null> | "connecting" | "initializing" | "speaking";
 
 export default function BarDemoPage() {
   const [state, setState] = useState<VisualizerMode>("listening");

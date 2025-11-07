@@ -70,7 +70,6 @@ export default function OrbDevPage() {
     setIsStarting(true);
     setErrorMessage(null);
     setStatusMessage("Solicitando micrófono...");
-    let sessionStarted = false;
     try {
       const permission = await requestMicrophonePermission();
       if (!permission) {
@@ -82,7 +81,6 @@ export default function OrbDevPage() {
       const signedUrl = await getSignedUrl();
       const id = await conversation.startSession({ signedUrl });
       setSessionId(id);
-      sessionStarted = true;
       setStatusMessage("Sesión lista. Probá hablar para ver el visualizador.");
     } catch (error) {
       console.error("Error starting conversation", error);

@@ -1,6 +1,7 @@
 "use client";
 
 import { ConvAI } from "@/components/ConvAI";
+import Image from "next/image";
 import { useEffect } from "react";
 
 const SIMPLE_STEPS = [
@@ -43,7 +44,14 @@ export default function Home() {
               <p className="text-2xl font-semibold text-sky-50 sm:text-3xl">
                 Probá el voicebot y llevate tu selfie Ford animada:
               </p>
-              <img src="/sticker-header.png" alt="Sticker" className="h-40 w-40 object-contain ml-4" />
+              <Image
+                src="/sticker-header.png"
+                alt="Sticker"
+                width={160}
+                height={160}
+                className="ml-4 h-40 w-40 object-contain"
+                priority
+              />
             </div>
 
           </div>
@@ -56,7 +64,13 @@ export default function Home() {
               >
                 <h2 className="text-base font-semibold text-sky-50">{step.title}</h2>
                 <p className="mt-2 leading-relaxed text-center">{step.description}</p>
-                <img src={step.image} alt={`${step.title} icon`} className="mt-4 h-24 w-24 object-contain" />
+                <Image
+                  src={step.image}
+                  alt={`${step.title} icon`}
+                  width={96}
+                  height={96}
+                  className="mt-4 h-24 w-24 object-contain"
+                />
               </div>
             ))}
           </div>

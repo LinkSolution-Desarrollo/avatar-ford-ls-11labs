@@ -161,7 +161,7 @@ function useMediaAnalyserFrame(
         const analyser = analyserRef.current;
         const buffer = bufferRef.current;
         if (analyser && buffer) {
-          analyser.getByteFrequencyData(buffer);
+          analyser.getByteFrequencyData(buffer as Uint8Array<ArrayBuffer>);
           setFrame({ data: new Uint8Array(buffer), binWidth: binWidthRef.current });
         }
         lastSample = timestamp;
@@ -308,7 +308,7 @@ export function useMultibandVolume(
 }
 
 export function useBarAnimator(
-  state: AgentState | "talking" | null | undefined,
+  state: VisualizerState,
   columns = DEFAULT_BAR_COUNT,
   interval = 140,
 ) {
@@ -347,7 +347,7 @@ export function useBarAnimator(
 }
 
 export type BarVisualizerProps = React.HTMLAttributes<HTMLDivElement> & {
-  state?: AgentState | "talking";
+  state?: VisualizerState;
   barCount?: number;
   mediaStream?: MediaStream | null;
   analyser?: VisualizerAnalyser;
@@ -393,7 +393,7 @@ export function BarVisualizer({
       ),
     [barCount, binWidth, frequencyData],
   );
-  const animatedValues = useBarAnimator(normalized, barCount, 150);
+  const animatedValues = useBarAnimator(state, barCount, 150);
   const hasSignal =
     (analyser ? frequencyData?.some((value) => value > 3) : mediaFrame.data?.some((value) => value > 3)) ??
     false;

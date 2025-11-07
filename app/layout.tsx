@@ -28,7 +28,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
                         />
                     </Link>
                     <Image
-                        src="https://exportargentina.org.ar/companyimages/16952433094675.png"
+                        src="https://i.postimg.cc/CLNRYWwj/link-solution-logo.webp"
                         alt="LinkSolution logo"
                         width={190}
                         height={76}

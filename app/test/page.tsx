@@ -7,17 +7,17 @@ const SIMPLE_STEPS = [
   {
     title: "1. Dejanos tu WhatsApp",
     description: "Escribí tu número con código de país para recibir la selfie animada.",
-    image: "/placeholder1.png",
+    image: "/ws-icon.png",
   },
   {
     title: "2. Hablá con Linky",
     description: "Contale quién sos, preguntale algo sobre Ford y pedile la foto.",
-    image: "/placeholder1.png",
+    image: "/linky.png",
   },
   {
     title: "3. Sonreí para la selfie",
     description: "Cuando Linky te avise, mirá a la cámara. La imagen llega por WhatsApp en minutos.",
-    image: "/placeholder1.png",
+    image: "/photo-icon2.png",
   },
 ];
 

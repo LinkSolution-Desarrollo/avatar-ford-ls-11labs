@@ -41,13 +41,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
                     <span className="hidden rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.35em] text-sky-100/80 sm:inline-flex">
                         Historiador Linky
                     </span>
-                    <Link
-                        href="/main"
-                        prefetch={false}
-                        className="hidden rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-sky-100 transition hover:bg-white/20 sm:inline-flex"
-                    >
-                        Modo completo
-                    </Link>
+
                 </div>
             </nav>
             {children}

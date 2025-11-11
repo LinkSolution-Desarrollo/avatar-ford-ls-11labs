@@ -53,7 +53,13 @@ export default function Home() {
                 priority
               />
             </div>
-
+                    <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => window.scrollTo({ top: window.innerHeight * 3, behavior: 'smooth' })}
+              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-sky-100 transition hover:bg-white/20"
+            >
+              Comenzar experiencia
+            </button>
           </div>
           
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -74,13 +80,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={() => window.scrollTo({ top: window.innerHeight * 3, behavior: 'smooth' })}
-              className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-sky-100 transition hover:bg-white/20"
-            >
-              Comenzar experiencia
-            </button>
+
           </div>
         </section>
 

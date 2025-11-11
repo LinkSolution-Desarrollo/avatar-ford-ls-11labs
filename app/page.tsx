@@ -76,7 +76,7 @@ export default function Home() {
           </div>
           <div className="mt-6 flex justify-center">
             <button
-              onClick={() => window.scrollTo({ top: window.innerHeight * 1, behavior: 'smooth' })}
+              onClick={() => window.scrollTo({ top: window.innerHeight * 3, behavior: 'smooth' })}
               className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-sky-100 transition hover:bg-white/20"
             >
               Comenzar experiencia
@@ -86,23 +86,6 @@ export default function Home() {
 
         <section className="rounded-[28px] border border-white/10 bg-[#081632]/70 p-4 shadow-[0_20px_60px_rgba(2,18,46,0.5)] backdrop-blur-md sm:p-6">
           <ConvAI variant="simple" />
-        </section>
-
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-sky-100/70 backdrop-blur sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-6">
-          <div>
-            <h2 className="text-base font-semibold uppercase tracking-[0.24em] text-sky-200">
-              ¿Querés ver la experiencia completa?
-            </h2>
-            <p className="mt-2 max-w-xl leading-relaxed">
-              Visitá el modo completo para seguir cada detalle de la experiencia, conocer todas las funciones y ver la guía paso a paso en más profundidad.
-            </p>
-          </div>
-          <a
-            className="mt-4 inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-sky-100 transition hover:bg-white/20 sm:mt-0"
-            href="/main"
-          >
-            Abrir modo completo
-          </a>
         </section>
       </main>
     </div>
